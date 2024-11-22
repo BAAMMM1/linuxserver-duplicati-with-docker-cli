@@ -51,27 +51,27 @@ To create before and after scripts for Duplicati, place them in the following di
 
 ### Step-by-Step Instructions:
 
-1. **Copy Script from Host to Container**  
+1. **Copy Script from Host to Container**
    Use the following command to copy the script from the host machine into the container:
    ```bash
    docker cp ./script.sh duplicati:/scripts/script.sh
    ```
 
-2. **Make the Script Executable**  
+2. **Make the Script Executable**
    After copying the script, make it executable inside the container:
    ```bash
    docker exec duplicati chmod +x /scripts/script.sh
    ```
 
-3. **Configure Duplicati GUI**  
+3. **Configure Duplicati GUI**
    In the Duplicati GUI, select you backup and navigate to the **"Advanced Options"** section:
    - Go to **Configuration → edit → 5. Options → Options for Pros**.
    - Add run-script-before
    - Enter the path of your script: `/scripts/script.sh`
      - ...
 
-### Ensure the Script Runs Only During Backups:
-To ensure that the script is only triggered during a backup and not during a restore operation, add the following condition in the script:
+### Ensure the Script Runs Only During duplicati backup operation:
+To ensure that the script is only triggered during a backup operation and not during a restore operation, add the following condition in the script:
 
 ```bash
 if [[ "${DUPLICATI__OPERATIONNAME,,}" != "backup" ]]; then
